@@ -1,14 +1,25 @@
 import { makeStyles } from '@material-ui/core';
-import React from 'react';
+import HeroBanner from "../images/netflix.jpg"
 
 const Banner = () => {
     const classes = useStyles();
-  return <div>Banner</div>;
+  return (
+    <div className={classes.root}>
+      Banner
+   </div>
+  )
 };
 
 
 const useStyles = makeStyles((theme) => ({
-  root: {},
+  root: {
+    backgroundImage: `url(${HeroBanner})`,
+    position:"relative",
+    height:"440px",
+    objectFit:"contain",
+    backgroundSize:"cover",
+    backgroundPosition:"center",
+  },
 }));
 
 
