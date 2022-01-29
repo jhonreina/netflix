@@ -6,14 +6,14 @@ import Paypal from "./pages/Paypal";
 import Profile from "./pages/Profile";
 
 function App() {
-  const user = "pepe";
+  const user = null;
   const classes = useStyles();
   return (
     <div className={classes.root}>
       <Router>
-        {!user ? (
-          <Login />
-        ) : (
+        {
+        !user ? (
+          <Login />) : (
           <Switch>
             <Route path="/profile">
               <Profile />
@@ -25,7 +25,8 @@ function App() {
               <Home />
             </Route>
           </Switch>
-        )}
+         )
+       }
       </Router>
     </div>
   );
@@ -33,9 +34,8 @@ function App() {
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    minHeight:"100hv",
+    minHeight:"100vh",
     // backgroundColor:"#111",
-   
   },
 }));
 
