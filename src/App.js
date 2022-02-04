@@ -1,20 +1,40 @@
 import { makeStyles } from "@material-ui/core";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { login, logout, selectUser } from "./features/UserSlice";
+import { auth } from "./firebase";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Paypal from "./pages/Paypal";
 import Profile from "./pages/Profile";
 
 function App() {
-  const user = null;
+  const user = useSelector(selectUser);
   const classes = useStyles();
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+   const unsubcribe = auth.onAuthStateChanged((userAuth) => {
+      if (userAuth){
+        dispatch(login({
+          uid: userAuth.uid,
+          email: userAuth.email 
+        }))
+      } else {
+        dispatch(logout)
+      }
+    })
+    return unsubcribe;
+  },[dispatch])
+
   return (
     <div className={classes.root}>
-      <Router>
-        {
-        !user ? (
-          <Login />) : (
+      <Router>        
           <Switch>
+            <Route path="/login">
+              <Login />
+            </Route>
             <Route path="/profile">
               <Profile />
             </Route>
@@ -24,9 +44,7 @@ function App() {
             <Route path="/">
               <Home />
             </Route>
-          </Switch>
-         )
-       }
+          </Switch>        
       </Router>
     </div>
   );

@@ -1,19 +1,26 @@
 import { makeStyles, Typography } from '@material-ui/core';
 import { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { auth } from '../firebase';
 import { NetflixButton, NetflixInput } from '../styled/styledcomponents';
 
 const SingUp = () => {
   const classes = useStyles();
   const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+  const [password, setPassword] = useState("");
+  const history = useHistory()
 
-    const signIn = (e) => {}
+    const signIn = (e) => {
+      e.preventDefault();
+      auth.signInWithEmailAndPassword(email, password)
+      .then( history.push("/"))
+      .catch((err) => alert(err.message));
+    }
     const register = (e) => {
       e.preventDefault();
       auth.createUserWithEmailAndPassword(email, password)
-      .then((authUser)=>console.log(authUser))
-      .catch((err)=>alert(err.message ))
+        .then( history.push("/"))
+        .catch((err) => alert(err.message));
     };
 
 
